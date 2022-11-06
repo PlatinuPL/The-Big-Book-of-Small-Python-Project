@@ -78,7 +78,7 @@ input('Naciśnij Enter, aby rozpocząć...')
 
 print("Przeprowadźmy kolejnych 100 000 symulacji")
 simMatch = 0 # Liczba symulacji w których wystąpiły te same dni urodzin
-for i in range(100_000_00):
+for i in range(100_000):
     #Wyświetlanie postępu co 10 000 symulacji
     if i % 10_000 == 0:
         print(i, "przeprowadzonych symulacji...")
@@ -88,7 +88,7 @@ for i in range(100_000_00):
 print("100 000 przprowadzonych symulacji")
 
 # Wyświetlanie wyników symulacji:
-probability = round(simMatch / 100_000_00 * 100,2)
+probability = round(simMatch / 100_000 * 100,2)
 print("Ze 100 000 symulacji dla", numBDay, "osób, ten sam")
 print("dzień urodzin wystąpił", simMatch, "razy. Oznacza to,")
 print("że dla", numBDay, "ludzi istnieje",probability, '% szans, iż')
