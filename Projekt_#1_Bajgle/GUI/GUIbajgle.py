@@ -69,7 +69,7 @@ def ok_click():
             break
         break
     if num_guesses > MAX_GUESSES:
-        tries_answer = tk.Label(AI_frame, text="Szanse się skończyły Mordo! Odpowiedź to: {}".format(secret_num),background=bg_color)
+        tries_answer = tk.Label(AI_frame, text="Szanse się skończyły! Odpowiedź to: {}".format(secret_num),background=bg_color)
         tries_answer.grid(row=11,ipadx= 70, padx=5,pady=1,sticky="WE")
         answer_button.config(state="disabled")
 
@@ -77,7 +77,7 @@ def getClues(guess, secret_num):
     global num_guesses,answer_button
     if guess == secret_num:
         answer_button.config(state="disabled")
-        return "Brawo!!! udało się mordo!"
+        return "Brawo!!! udało się!"
         
     clues = []
     for i in range(len(guess)):
