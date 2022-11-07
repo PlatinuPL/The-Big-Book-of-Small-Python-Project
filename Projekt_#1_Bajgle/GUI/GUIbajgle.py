@@ -45,26 +45,35 @@ def start_game():
     restart_button.grid(row=0,column=1)
     for i in range(MAX_GUESSES+1):
         empty_answer[i].grid(row=i+1,ipadx= 70, padx=5,pady=1,sticky="WE")
-        print(i)
-
     AI_label.grid(row=0,ipadx= 70, padx=5,pady=5,sticky="WE")
 
 def ok_click():
-    global guess, num_guesses,answer_entry,secret_num,empty_answer11
-    while num_guesses <= MAX_GUESSES:
-        guess = str(answer_entry.get())
-        while len(guess) == NUM_DIGITS or not guess.isdecimal():
-            #print(num_guesses)
-            clues = getClues(guess, secret_num)   
-            empty_answer = tk.Label(AI_frame, text="Próba #{}: {}".format(num_guesses,clues),background=bg_color)
-            empty_answer.grid(row=num_guesses,ipadx= 70, padx=5,pady=1,sticky="WE")
-            num_guesses +=1
+    global guess, num_guesses,answer_entry,secret_num
+    c =0
+    numbers = "0123456789"
+    guess = str(answer_entry.get())
+    if len(guess) ==NUM_DIGITS:
+        for i in range(len(guess)):
+            a = guess[i:i+1]
+            print(a)
+            for b in numbers:
+                if a == b:
+                    c+=1
+    if c == len(guess) and c != 0: 
+        while num_guesses <= MAX_GUESSES:
+            while len(guess) == NUM_DIGITS or not guess.isdecimal():
+                #print(num_guesses)
+                clues = getClues(guess, secret_num)   
+                empty_answer = tk.Label(AI_frame, text="Próba #{}: {}".format(num_guesses,clues),background=bg_color)
+                empty_answer.grid(row=num_guesses,ipadx= 70, padx=5,pady=1,sticky="WE")
+                num_guesses +=1
+                break
             break
-        break
-    if num_guesses > MAX_GUESSES:
-        tries_answer = tk.Label(AI_frame, text="Szanse się skończyły! Odpowiedź to: {}".format(secret_num),background=bg_color)
-        tries_answer.grid(row=11,ipadx= 70, padx=5,pady=1,sticky="WE")
-        answer_button.config(state="disabled")
+        if num_guesses > MAX_GUESSES:
+            tries_answer = tk.Label(AI_frame, text="Szanse się skończyły! Odpowiedź to: {}".format(secret_num),background=bg_color)
+            tries_answer.grid(row=11,ipadx= 70, padx=5,pady=1,sticky="WE")
+            answer_button.config(state="disabled")
+        
 
 def getClues(guess, secret_num):
     global num_guesses,answer_button
