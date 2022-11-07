@@ -6,6 +6,7 @@ from tkinter import BOTH
 NUM_DIGITS = 3
 MAX_GUESSES = 10
 num_guesses = 1
+empty_answer = []
 
 #Define window
 root = tk.Tk()
@@ -42,17 +43,9 @@ def start_game():
     answer_entry.grid(pady=3,ipadx =4,ipady=1,row=1,column=0,sticky="E")
     answer_button.grid(pady=3,ipadx =4,ipady=1,row=1,column=1,sticky="W")
     restart_button.grid(row=0,column=1)
-    empty_answer1.grid(row=1,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer2.grid(row=2,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer3.grid(row=3,ipadx= 70, padx=5,pady=1,sticky="WE")    
-    empty_answer4.grid(row=4,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer5.grid(row=5,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer6.grid(row=6,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer7.grid(row=7,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer8.grid(row=8,ipadx= 70, padx=5,pady=1,sticky="WE")    
-    empty_answer9.grid(row=9,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer10.grid(row=10,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer11.grid(row=11,ipadx= 70, padx=5,pady=1,sticky="WE")
+    for i in range(MAX_GUESSES+1):
+        empty_answer[i].grid(row=i+1,ipadx= 70, padx=5,pady=1,sticky="WE")
+        print(i)
 
     AI_label.grid(row=0,ipadx= 70, padx=5,pady=5,sticky="WE")
 
@@ -92,32 +85,13 @@ def getClues(guess, secret_num):
         return " ".join(clues)
     
 def restart_game():
-    global secret_num,num_guesses,empty_answer1,empty_answer2,empty_answer3,empty_answer4,empty_answer5,empty_answer6,empty_answer7,empty_answer8,empty_answer9,empty_answer10
-    empty_answer1 = tk.Label(AI_frame, text="",background=bg_color)
-    empty_answer2 = tk.Label(AI_frame, text="",background=bg_color)
-    empty_answer3 = tk.Label(AI_frame, text="",background=bg_color)
-    empty_answer4 = tk.Label(AI_frame, text="",background=bg_color)
-    empty_answer5 = tk.Label(AI_frame, text="",background=bg_color)
-    empty_answer6 = tk.Label(AI_frame, text="",background=bg_color)
-    empty_answer7 = tk.Label(AI_frame, text="",background=bg_color)
-    empty_answer8 = tk.Label(AI_frame, text="",background=bg_color)
-    empty_answer9 = tk.Label(AI_frame, text="",background=bg_color)
-    empty_answer10 = tk.Label(AI_frame, text="",background=bg_color)
-    empty_answer11 = tk.Label(AI_frame, text="",background=bg_color)
-    empty_answer1.grid(row=1,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer2.grid(row=2,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer3.grid(row=3,ipadx= 70, padx=5,pady=1,sticky="WE")    
-    empty_answer4.grid(row=4,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer5.grid(row=5,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer6.grid(row=6,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer7.grid(row=7,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer8.grid(row=8,ipadx= 70, padx=5,pady=1,sticky="WE")    
-    empty_answer9.grid(row=9,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer10.grid(row=10,ipadx= 70, padx=5,pady=1,sticky="WE")
-    empty_answer11.grid(row=11,ipadx= 70, padx=5,pady=1,sticky="WE")
-    answer_button.config(state="active")
-    num_guesses = 1
-    get_secret_num()
+    global secret_num,num_guesses,empty_answer
+    for i in range(MAX_GUESSES+1):
+        empty_answer[i] = tk.Label(AI_frame, text="",background=bg_color)
+        empty_answer[i].grid(row=i+1,ipadx= 70, padx=5,pady=1,sticky="WE")
+        answer_button.config(state="active")
+        num_guesses = 1
+        get_secret_num()
 
 def get_secret_num():
     global secret_num
@@ -151,7 +125,6 @@ rules_label3 = tk.Label(rule_frame, text = '''Na przykład, jeśli tajna liczba 
     wskazówka będzie brzmieć Fermi Piko.''',background=bg_color,font=rule_font)  
 
 start_button = tk.Button(start_frame,text = "START",background=button_color,activebackground=button_color_active,command=start_game)
-
 start_button.grid(padx=150,pady=30,ipadx =40,ipady=15)
 rules_label.grid(row=0,column=0,sticky='E')
 rules_label2.grid(row=1,column=0,sticky='W')
@@ -160,24 +133,16 @@ rules_label3.grid(row=2,column=0,sticky='WE')
 #Define after Start click layouts
 AI_frame = tk.LabelFrame(root, padx = 5, pady = 5,background=bg_color)
 PL_frame = tk.LabelFrame(root, padx = 5, pady = 5,background=bg_color)
-AI_label = tk.Label(AI_frame, text = '''Mam na myśli liczbę.
-    Masz {} prób, by odgadnąć, jaka to liczba. \n
+AI_label = tk.Label(AI_frame, text = '''Mam na myśli liczbę. 
+Masz {} prób, by odgadnąć, jaka to liczba. \n
 Oto wskazówki:'''.format(MAX_GUESSES),background=bg_color,font=rule_font,justify="center")
 answer_info = tk.Label(PL_frame,text = "Tutaj wpisz odpowiedź i kliknij 'OK' ",font = rule_font_big,background=bg_color)
 answer_entry = tk.Entry(PL_frame,width=5,font=rule_font_big)
 answer_button = tk.Button(PL_frame,text = "OK",background=button_color,activebackground=button_color_active,command=ok_click)
 restart_button = tk.Button(PL_frame,text = "Restart",background=button_color,activebackground=button_color_active,command=restart_game)
-empty_answer1 = tk.Label(AI_frame, text="",background=bg_color)
-empty_answer2 = tk.Label(AI_frame, text="",background=bg_color)
-empty_answer3 = tk.Label(AI_frame, text="",background=bg_color)
-empty_answer4 = tk.Label(AI_frame, text="",background=bg_color)
-empty_answer5 = tk.Label(AI_frame, text="",background=bg_color)
-empty_answer6 = tk.Label(AI_frame, text="",background=bg_color)
-empty_answer7 = tk.Label(AI_frame, text="",background=bg_color)
-empty_answer8 = tk.Label(AI_frame, text="",background=bg_color)
-empty_answer9 = tk.Label(AI_frame, text="",background=bg_color)
-empty_answer10 = tk.Label(AI_frame, text="",background=bg_color)
-empty_answer11 = tk.Label(AI_frame, text="",background=bg_color)
+for i in range(MAX_GUESSES+1):
+    empty_answer.append(tk.Label(AI_frame, text="",background=bg_color))
+
 
     
 #Run the root mainloop
